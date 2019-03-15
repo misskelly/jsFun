@@ -1,3 +1,5 @@
+
+
 const { kitties } = require('./datasets/kitties');
 const { clubs } = require('./datasets/clubs');
 const { mods } = require('./datasets/mods');
@@ -256,9 +258,23 @@ const cakePrompts = {
     // every cake in the dataset e.g.
     // ['dutch process cocoa', 'toasted sugar', 'smoked sea salt', 'berries', ..etc]
 
-    //
+    // iterate through cakes using reduce
+    // accumulator = toppingsNeeded (begin with []), currentEl = cake
+    // iterate through cake.toppings with forEach
+    // callback topping =>
+    // if toppingsNeeded array doesn't contain topping,(!toppingsNeeded[topping]) 
+    // add topping to toppingsNeeded (toppingsNeeded += topping)
+    //return toppingsNeeded;
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+
+    const result = cakes.reduce((toppingsNeeded, cake) => {
+      cake.toppings.forEach(topping => {
+        if (!toppingsNeeded.includes(topping)) {
+          toppingsNeeded.push(topping);
+        }
+      });
+      return toppingsNeeded;
+    }, []);
     return result;
 
     // Annotation:
@@ -276,7 +292,28 @@ const cakePrompts = {
     //    ...etc
     // }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    // iterate through this.allToppings with reduce
+    // accumulator = list(begin with {}), currentElement = topping
+    // on each iteration, add topping as key with 0 value
+    // (list[topping]= 0)
+    // iterate through cakes using find
+    // callback cake => 
+    // ////////////////////
+    // same as all toppings except
+    // in for Each topping, conditional is 
+    //if list does not contain topping (!list[topping]) 
+    // create key for topping and assign to 0(list[topping]= 0)
+    // outside conditional, increase value by one (list[topping]++)
+
+    const result = cakes.reduce((list, cake) => {
+      cake.toppings.forEach(topping => {
+        if (!list[topping]) {
+          list[topping] = 0;
+        }
+        list[topping]++;
+      });
+      return list;
+    }, {});
     return result;
 
     // Annotation:
@@ -311,7 +348,11 @@ const classPrompts = {
     //   { roomLetter: 'G', program: 'FE', capacity: 29 }
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    // iterate using filter
+    // callback => room
+    // condition room.program === 'FE'
+
+    const result = classrooms.filter(room => room.program === 'FE');
     return result;
 
     // Annotation:
@@ -326,9 +367,27 @@ const classPrompts = {
     //   beCapacity: 96
     // }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
+    // reduce classrooms to return object
+    // acc = capacity, current el = room
+    // create variables feCapacity and beCapacity, assign to 0
+    // conditional, if room.program is FE, add room.capacity to feCapacity(feCapacity = feCapacity + room.capacity) 
+    // otherwise, add room.capacity to beCapacity
+//  🤬
 
+    const result = classrooms.reduce((capacity, room) => {
+      const feCap = classrooms.filter(room => room.program === 'FE').reduce((capacity, room) => {
+        capacity += room.capacity;
+        return capacity;
+      }, 0);
+      const beCap = classrooms.filter(room => room.program === 'BE').reduce((capacity, room) => {
+        capacity += room.capacity;
+        return capacity;
+      }, 0);
+      capacity.feCapacity = feCap;
+      capacity.beCapacity = beCap;
+      return capacity;
+    }, {});
+    return result;
     // Annotation:
     // Write your annotation here as a comment
   },
@@ -474,7 +533,7 @@ const turingPrompts = {
     //     Brittany: [2, 4],
     //     Nathaniel: [2, 4],
     //     Robbie: [4],
-    //     Leta: [4, 2],
+    //     Leta: [2, 4],
     //     Travis: [1, 2, 3, 4],
     //     Louisa: [1, 2, 3, 4],
     //     Christie: [1, 2, 3, 4],

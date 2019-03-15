@@ -155,10 +155,10 @@ describe('PROTOTYPES', () => {
     }), it('totalInventory', () => {
       const e = cakePrompts.totalInventory();
       expect(e).to.deep.equal(59);
-    }), it.skip('allToppings', () => {
+    }), it('allToppings', () => {
       const e = cakePrompts.allToppings();
       expect(e).to.deep.equal(['dutch process cocoa', 'toasted sugar', 'smoked sea salt', 'berries', 'edible flowers', 'mint', 'cranberry', 'crystallized ginger']);
-    }), it.skip('groceryList', () => {
+    }), it('groceryList', () => {
       const e = cakePrompts.groceryList();
       expect(e).to.deep.equal({
         'dutch process cocoa': 1,
@@ -172,7 +172,7 @@ describe('PROTOTYPES', () => {
       });
     });
   }), describe('Class Prompts', () => {
-    it.skip('feClassrooms', () => {
+    it('feClassrooms', () => {
       const e = classPrompts.feClassrooms();
       expect(e).to.deep.equal([{
         roomLetter: 'A',
@@ -191,7 +191,7 @@ describe('PROTOTYPES', () => {
         program: 'FE',
         capacity: 29
       }]);
-    }), it.skip('totalCapacities', () => {
+    }), it('totalCapacities', () => {
       const e = classPrompts.totalCapacities();
       expect(e).to.deep.equal({
         feCapacity: 110,
@@ -310,7 +310,7 @@ describe('PROTOTYPES', () => {
         Brittany: [2, 4],
         Nathaniel: [2, 4],
         Robbie: [4],
-        Leta: [4, 2],
+        Leta: [2, 4],
         Travis: [1, 2, 3, 4],
         Louisa: [1, 2, 3, 4],
         Christie: [1, 2, 3, 4],
