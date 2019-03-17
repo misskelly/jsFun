@@ -93,6 +93,23 @@ const clubPrompts = {
     //   ...etc
     // }
 
+    //***************** */
+    //**** check for truthy values rather than falsy */
+    // array--What am I given?
+    // obj-- What do I want back?
+    // reduce-- what prototype methods can I reach for to do this?
+
+    //** */reverse conditional to make it easier to read
+    //** PSEUDO CODE FIRST work in repl, instructor driving */
+
+    //* 1 : 1 dataset, 1 prototype
+    //* 2 : 1 dataset, 2 prototypes
+    //* 3 : 2 / 1
+    //* 4 : 2 / multiple prototypes
+
+
+
+
     const result = clubs.reduce((addMembers, club) => {
       club.members.find(member => {
         if(!addMembers[member]) {
@@ -138,16 +155,39 @@ const modPrompts = {
     //   { mod: 3, studentsPerInstructor: 10 },
     //   { mod: 4, studentsPerInstructor: 8 }
     // ]
+    //* 
+    //*
+    //*
+    //*
+    //*result const , if you want more than one parameter for your callback function
+    //*
+    //************************************ */
 
-    const result = mods.reduce((modRatios, module) => {
-      const studentRatio =  module.students / module.instructors;
-      const modRatio = {
-        mod: module.mod,
-        studentsPerInstructor: studentRatio
-      };
-      modRatios.push(modRatio);
-      return modRatios;
-    }, []);
+
+
+    const result = mods.map((module) => {
+      let newModElem = {};
+      newModElem.mod = module.mod;
+      newModElem.studentsPerInstructor = module.students / module.instructors;
+      return newModElem;
+    });
+
+
+
+
+
+
+
+
+    // const result = mods.reduce((modRatios, module) => {
+    //   const studentRatio =  module.students / module.instructors;
+    //   const modRatio = {
+    //     mod: module.mod,
+    //     studentsPerInstructor: studentRatio
+    //   };
+    //   modRatios.push(modRatio);
+    //   return modRatios;
+    // }, []);
     return result;
 
     // Annotation:
@@ -340,68 +380,102 @@ const cakePrompts = {
 // DATASET: classrooms from ./datasets/classrooms
 const classPrompts = {
   feClassrooms() {
-    // Create an array of just the front-end classrooms. e.g.
-    // [
-    //   { roomLetter: 'A', program: 'FE', capacity: 32 },
-    //   { roomLetter: 'C', program: 'FE', capacity: 27 },
-    //   { roomLetter: 'E', program: 'FE', capacity: 22 },
-    //   { roomLetter: 'G', program: 'FE', capacity: 29 }
-    // ]
+    //     // Create an array of just the front-end classrooms. e.g.
+    //     // [
+    //     //   { roomLetter: 'A', program: 'FE', capacity: 32 },
+    //     //   { roomLetter: 'C', program: 'FE', capacity: 27 },
+    //     //   { roomLetter: 'E', program: 'FE', capacity: 22 },
+    //     //   { roomLetter: 'G', program: 'FE', capacity: 29 }
+    //     // ]
 
-    // iterate using filter
-    // callback => room
-    // condition room.program === 'FE'
+    //     // iterate using filter
+    //     // callback => room
+    //     // condition room.program === 'FE'
 
     const result = classrooms.filter(room => room.program === 'FE');
     return result;
 
-    // Annotation:
-    // Write your annotation here as a comment
+    //     // Annotation:
+    //     // Write your annotation here as a comment
   },
 
   totalCapacities() {
-    // Create an object where the keys are 'feCapacity' and 'beCapacity',
+    //     // Create an object where the keys are 'feCapacity' and 'beCapacity',
     // and the values are the total capacity for all classrooms in each program e.g.
     // { 
     //   feCapacity: 110,
     //   beCapacity: 96
     // }
 
+    // ***************************************
+    //  classrooms.reduce((capacities, room) {
+    // let roomCap = room.program === 'FE' ? 'feCapacity' : 'beCapacity';
+    // capacities[roomCapacity] += room.capacity;
+    // }, { feCapacity: 0, beCapacity: 0 });
+
+    //    if (room.program === 'FE) {
+    // capacities.feCapacity += room.capacity;
+    // } else {
+    // capacities.beCapacity += room.capacity;
+    // }
+    // }, { feCapacity: 0, beCapacity: 0 });
+    // **
+    // **
+    // **
+    // **
+    // **
+    // **
+    // **
+
     // reduce classrooms to return object
     // acc = capacity, current el = room
     // create variables feCapacity and beCapacity, assign to 0
     // conditional, if room.program is FE, add room.capacity to feCapacity(feCapacity = feCapacity + room.capacity) 
     // otherwise, add room.capacity to beCapacity
-//  🤬
+    //  🤬
 
-    const result = classrooms.reduce((capacity, room) => {
-      const feCap = classrooms.filter(room => room.program === 'FE').reduce((capacity, room) => {
-        capacity += room.capacity;
-        return capacity;
-      }, 0);
-      const beCap = classrooms.filter(room => room.program === 'BE').reduce((capacity, room) => {
-        capacity += room.capacity;
-        return capacity;
-      }, 0);
-      capacity.feCapacity = feCap;
-      capacity.beCapacity = beCap;
-      return capacity;
-    }, {});
+    //   const result = classrooms.reduce((capacity, room) => {
+    //     let feCapacityNum;
+    //     let beCapacityNum;
+    //     const feCap = classrooms.filter(room => room.program === 'FE').forEach((room) => {
+    //       feCapacityNum += room.capacity;
+    //     });
+    //     const beCap = classrooms.filter(room => room.program === 'BE').reduce((capacity, room) => {
+    //       capacity += room.capacity;
+    //       return capacity;
+    //     }, 0);
+    //     capacity.feCapacity = feCap;
+    //     capacity.beCapacity = beCap;
+    //     // clean your keys to be returned in the proper format here
+    //     // capacity = { feCapacity: feCapacityNum} maybe something like this
+    //     return capacity;
+    //   }, {});
+    // ***********
+    const result = classrooms.reduce((capacities, room) => {
+      let roomCap = room.program === 'FE' ? 'feCapacity' : 'beCapacity';
+      capacities[roomCap] += room.capacity;
+      return capacities;
+    }, { feCapacity: 0, beCapacity: 0 });
     return result;
-    // Annotation:
-    // Write your annotation here as a comment
+    //   // Annotation:
+    //   // Write your annotation here as a comment
   },
 
   sortByCapacity() {
-    // Return the array of classrooms sorted by their capacity (least capacity to greatest)
+    //   // Return the array of classrooms sorted by their capacity (least capacity to greatest)
+    //   // 
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = classrooms.sort((roomA, roomB) => {
+      return roomA.capacity - roomB.capacity;
+    });
+     
     return result;
 
-    // Annotation:
-    // Write your annotation here as a comment
+    //   // Annotation:
+    //   // Write your annotation here as a comment
   }
-};
+}; 
+
 
 
 
@@ -425,7 +499,10 @@ const breweryPrompts = {
     // Return the total beer count of all beers for every brewery e.g.
     // 40
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    // iterate throu breweries with reduce
+    // acc = beerCount, currentEl = brewery
+
+    const result = breweries.reduce((beerCount, brewery) => beerCount += brewery.beers.length, 0);
     return result;
 
     // Annotation:
@@ -441,7 +518,21 @@ const breweryPrompts = {
     // ...etc.
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    // iterate with reduce
+    // acc  = breweryBeerCounts, current el = brewery
+    // create beer count variable (let numbersOfBeers = brewery.beers.length)
+    // add brewery object to breweryBeerCounts[]
+    // return brewery beercounts
+    // 
+
+    const result = breweries.reduce((breweryBeerCounts, brewery) => {
+      // const numberOfBeers = brewery.beers.length;
+      breweryBeerCounts.push({
+        name: brewery.name,
+        beerCount: brewery.beers.length
+      }); 
+      return breweryBeerCounts;
+    }, []);
     return result;
 
     // Annotation:
@@ -452,8 +543,17 @@ const breweryPrompts = {
     // Return the beer which has the highest ABV of all beers
     // e.g.
     // { name: 'Barrel Aged Nature\'s Sweater', type: 'Barley Wine', abv: 10.9, ibu: 40 }
+    
+    const result = breweries.reduce((mostAbvBeer, brewery) => {
+      const currentHighest = brewery.beers.sort((beerA, beerB) => beerB.abv - beerA.abv)[0];
+      let newHighest;
+      if (newHighest === undefined || currentHighest.abv > newHighest.abv) {
+        newHighest = currentHighest;
+      }
+      mostAbvBeer = newHighest;
+      return mostAbvBeer;
+    });
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
     return result;
 
     // Annotation:
@@ -493,6 +593,9 @@ const breweryPrompts = {
 
 // DATASET: instructors, cohorts from ./datasets/turing
 const turingPrompts = {
+  
+  
+  
   studentsForEachInstructor() {
     // Return an array of instructors where each instructor is an object
     // with a name and the count of students in their module. e.g. 
@@ -500,16 +603,31 @@ const turingPrompts = {
     //  { name: 'Pam', studentCount: 21 },
     //  { name: 'Robbie', studentCount: 18 }
     // ]
-
-    const result = instructors.forEach(instructor => {
-      let match = instructors.find(instructor => instructor.module === cohort.module);
-      console.log(match);
+    const result = instructors.map((instructor) => {
+      let match = cohorts.find(cohort => instructor.module === cohort.module);
+      console.log('this iteration: ', match)
     });
+      
+//
+      
+      
+      
+      
+
+    
     return result;
 
+
+  },
+
+
+    // const result = instructors.forEach(instructor => {
+    //   let match = instructors.find(instructor => instructor.module === cohort.module);
+    //   console.log(match);
+    // });
     // Annotation:
     // Write your annotation here as a comment
-  },
+ 
 
   studentsPerInstructor() {
     // Return an object of how many students per teacher there are in each cohort e.g.
@@ -517,6 +635,16 @@ const turingPrompts = {
     // cohort1806: 9,
     // cohort1804: 10.5
     // }
+
+    //  **** RYAN'S PRACTICE
+    cohorts.reduce((acc, currentCohort) => {
+      acc[`cohort${currentCohort.cohort}`] = 0;
+      let instructorCount = instructor.filter((instructor) => {
+        return instructor.module === currentCohort.module;
+      }).length;
+      acc[`cohort${currentCohort.cohort}`] = currentCohort.studentCount / instructorCount;
+      return acc;
+    }, {});
 
     const result = 'REPLACE WITH YOUR RESULT HERE';
     return result;
