@@ -604,29 +604,25 @@ const turingPrompts = {
     //  { name: 'Robbie', studentCount: 18 }
     // ]
     const result = instructors.map((instructor) => {
-      let match = cohorts.find(cohort => instructor.module === cohort.module);
-      console.log('this iteration: ', match)
+      let matchingCohort = cohorts.find(cohort => instructor.module === cohort.module);
+      return {
+        name: instructor.name,
+        studentCount: matchingCohort.studentCount
+      };
     });
       
-//
-      
-      
-      
-      
-
-    
     return result;
 
 
   },
 
 
-    // const result = instructors.forEach(instructor => {
-    //   let match = instructors.find(instructor => instructor.module === cohort.module);
-    //   console.log(match);
-    // });
-    // Annotation:
-    // Write your annotation here as a comment
+  // const result = instructors.forEach(instructor => {
+  //   let match = instructors.find(instructor => instructor.module === cohort.module);
+  //   console.log(match);
+  // });
+  // Annotation:
+  // Write your annotation here as a comment
  
 
   studentsPerInstructor() {
@@ -637,16 +633,20 @@ const turingPrompts = {
     // }
 
     //  **** RYAN'S PRACTICE
-    cohorts.reduce((acc, currentCohort) => {
-      acc[`cohort${currentCohort.cohort}`] = 0;
-      let instructorCount = instructor.filter((instructor) => {
-        return instructor.module === currentCohort.module;
-      }).length;
-      acc[`cohort${currentCohort.cohort}`] = currentCohort.studentCount / instructorCount;
-      return acc;
-    }, {});
+    // cohorts.reduce((acc, currentCohort) => {
+    //   acc[`cohort${currentCohort.cohort}`] = 0;
+    //   let instructorCount = instructor.filter((instructor) => {
+    //     return instructor.module === currentCohort.module;
+    //   }).length;
+    //   acc[`cohort${currentCohort.cohort}`] = currentCohort.studentCount / instructorCount;
+    //   return acc;
+    // }, {});
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = cohorts.reduce((cohortList, currentCohort) => {
+      const teachers = instructors.filter((instructor) => instructor.module === currentCohort.module).length;
+      cohortList[`cohort${currentCohort.cohort}`] = currentCohort.studentCount / teachers;
+      return cohortList;
+    }, {});
     return result;
 
     // Annotation:
