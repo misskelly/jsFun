@@ -667,6 +667,16 @@ const turingPrompts = {
     //     Christie: [1, 2, 3, 4],
     //     Will: [1, 2, 3, 4]
     //   }
+    //1. GIVEN TWO ARRAYS OF OBJECTS
+    //2. WANT ONE OBJECT BACK
+    //3. BEST WAY TO RETURN OBJECT IS REDUCE
+    //4. ITERATE OVER INSTRUCTORS
+    //5. MODULE, CURRICULUM AND TEACHES CONTAIN SIMILAR VALUES
+    //
+    //iterate through instructors using reduce
+    
+
+
 
     const result = 'REPLACE WITH YOUR RESULT HERE';
     return result;
