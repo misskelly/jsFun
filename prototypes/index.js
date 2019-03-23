@@ -674,11 +674,37 @@ const turingPrompts = {
     //5. MODULE, CURRICULUM AND TEACHES CONTAIN SIMILAR VALUES
     //
     //iterate through instructors using reduce
+    // acc = teacherQualifications currentEl = teacher
+    // return object
+    // iterate through teacher.teaches with for each
+    // for each subject
+    // iterate through cohorts with for each
+    // if cohort.cirriculum includes subject
+    // do we have the teacher yet? if so, add teacher and mod array 
+    // teacherqualifications[teacher.name] = [ cohort.module ]
+    // otherwise teacherqualifications[teacher.name].push(cohort.module)
+
+
+
+
     
 
 
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = instructors.reduce((teacherQuals, teacher) => {
+      teacherQuals[teacher.name] = [];
+      teacher.teaches.forEach((subject) => {
+        cohorts.forEach(cohort => {
+          if (cohort.curriculum.includes(subject)) {
+            teacherQuals[teacher.name].push(cohort.module);
+          }
+        });
+      });
+      let mods = Array.from(new Set(teacherQuals[teacher.name])).sort();
+      teacherQuals[teacher.name] = mods;
+      console.log(teacherQuals);
+      return teacherQuals;
+    }, {});
     return result;
 
     // Annotation:
@@ -686,6 +712,7 @@ const turingPrompts = {
   },
 
   curriculumPerTeacher() {
+    
     // Return an object where each key is a curriculum topic and each value is
     // an array of instructors who teach that topic e.g.:
     // { 
@@ -695,7 +722,29 @@ const turingPrompts = {
     //   recursion: [ 'Pam', 'Leta' ]
     // }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    // iterate over instructors with reduce
+    // acc = topicsTeachers, current el = teacher
+    // let subjects 
+    //  teacher.teaches.forEach(subject => {
+      // if the subject isn't in the subjects array, add it
+      // add that subject as a property in topicsTeachers
+    // assign array with teacher's name;
+    // check for duplicates
+
+    //
+    
+
+    const result = instructors.reduce((topicsTeachers, teacher) => {
+      teacher.teaches.forEach(subject => {
+        if (!topicsTeachers[subject]) {
+          topicsTeachers[subject] = [teacher.name];
+        } else {
+          topicsTeachers[subject].push(teacher.name);
+        }
+      });
+      console.log(topicsTeachers)
+      return topicsTeachers;
+    }, {});
     return result;
 
     // Annotation:
